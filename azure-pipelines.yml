@@ -1,17 +1,23 @@
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'Towards-AzureDevops'
-    appType: 'webAppLinux'
-    appName: 'tso-webcalculator-app'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-- task: ServiceNow-DevOps-Server-Change-Acceleration@1
-  inputs:
-    connectedServiceName: "emptsoueid1.service-now.com" # ServiceNow DevOps Change Velocity Service Connection
+jobs:
+- job: Approval
+  pool: server
+  steps:
+  - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+    inputs:
+      connectedServiceName: 'emptsoueid1-MyLab-Project-ServiceNow DevOps Service Connection'
+
+- job: Deploy
+  steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: true
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'Towards-AzureDevops'
+      appType: 'webAppLinux'
+      appName: 'tso-webcalculator-app'
+      package: '$(System.DefaultWorkingDirectory)/**/*.zip'
