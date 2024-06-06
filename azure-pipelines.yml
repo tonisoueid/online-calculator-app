@@ -10,6 +10,7 @@ jobs:
       connectedServiceName: 'emptsoueid1-MyLab-Project-ServiceNow DevOps Service Connection'
 
 - job: Deploy
+  dependsOn: Approval
   steps:
   - task: DotNetCoreCLI@2
     inputs:
