@@ -12,3 +12,6 @@ steps:
     appType: 'webAppLinux'
     appName: 'tso-webcalculator-app'
     package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+- task: ServiceNow-DevOps-Server-Change-Acceleration@1
+  inputs:
+    connectedServiceName: "emptsoueid1.service-now.com" # ServiceNow DevOps Change Velocity Service Connection
